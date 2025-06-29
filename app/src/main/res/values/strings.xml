@@ -15,4 +15,5 @@
     <string name="invalid_email">Invalid Email</string>
     <string name="invalid_password">Invalid Password</string>
     <string name="password_does_not_match">Password does not match</string>
+    <string name="todo">ToDo</string>
 </resources>
