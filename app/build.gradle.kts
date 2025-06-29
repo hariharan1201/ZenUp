@@ -63,6 +63,8 @@ dependencies {
     //firebase and Firebase analytics
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    //firebase auth
+    implementation(libs.firebase.auth)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
