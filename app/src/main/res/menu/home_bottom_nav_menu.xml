@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/todo_page"
+        android:title="@string/todo" />
+    <item
+        android:id="@+id/reminder_page"
+        android:title="@string/reminder" />
+
+    <item
+        android:id="@+id/profile_page"
+        android:title="@string/profile" />
+</menu>

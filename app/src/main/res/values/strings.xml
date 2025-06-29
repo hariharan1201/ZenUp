@@ -16,4 +16,6 @@
     <string name="invalid_password">Invalid Password</string>
     <string name="password_does_not_match">Password does not match</string>
     <string name="todo">ToDo</string>
+    <string name="profile">Profile</string>
+    <string name="reminder">Reminder</string>
 </resources>
