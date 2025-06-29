@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ZenUp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/zen_primary</item>
+        <item name="colorPrimaryVariant">@color/zen_surface</item>
+        <item name="colorOnPrimary">@color/zen_on_primary</item>
+
+        <!-- Secondary/accent color -->
+        <item name="colorSecondary">@color/zen_accent</item>
+        <item name="colorSecondaryVariant">@color/zen_secondary</item>
+        <item name="colorOnSecondary">@color/zen_on_primary</item>
+
+        <!-- Background and Surface -->
+        <item name="android:colorBackground">@color/zen_background</item>
+        <item name="colorSurface">@color/zen_surface</item>
+        <item name="colorOnBackground">@color/zen_on_background</item>
+        <item name="colorError">@color/zen_error</item>
+
+        <!-- Optional UI styling -->
+        <item name="android:statusBarColor" >@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/zen_background</item>
+    </style>
+
+    <style name="Theme.ZenUp" parent="Base.Theme.ZenUp" />
+</resources>
