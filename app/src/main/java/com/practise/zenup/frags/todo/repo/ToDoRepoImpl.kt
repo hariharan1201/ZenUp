@@ -1,6 +1,5 @@
 package com.practise.zenup.frags.todo.repo
 
-import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.practise.zenup.model.FirebaseOps
@@ -15,11 +14,11 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class ToDoRepoImpl @Inject constructor(private val firebaseOps: FirebaseOps): ToDoRepo {
+class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
     private val firebaseDatabase = firebaseOps.getFirebaseFireStore().collection(TODO_FB_PATH)
     private val userInfo = firebaseOps.getFirebaseAuth().currentUser
 
-    override fun getToDo(): Flow<ToDoState> = flow<ToDoState> {
+    override fun getToDo(): Flow<ToDoState> = flow {
         emit(ToDoState.Loading)
         if(userInfo != null) {
             val doc = firebaseDatabase
@@ -29,16 +28,17 @@ class ToDoRepoImpl @Inject constructor(private val firebaseOps: FirebaseOps): To
                 .get().await()
             if(!doc.isEmpty)
                 emit(ToDoState.GetToDo(doc.documents))
-            else
+            else {
                 emit(ToDoState.Failed)
+                emit(ToDoState.GetToDo(mutableListOf()))
+            }
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun addToDo(todo : String): Flow<ToDoState> = flow<ToDoState> {
+    override fun addToDo(todo : String): Flow<ToDoState> = flow {
         emit(ToDoState.Loading)
         if(userInfo != null){
-            Log.d("FIREBASE", userInfo.uid)
-            val status = suspendCoroutine<Boolean> { state->
+            val status = suspendCoroutine { state->
                 firebaseDatabase.document(userInfo.uid)
                     .collection(TODO_SUB_PATH)
                     .add(mapOf("ToDo" to todo,
@@ -47,6 +47,18 @@ class ToDoRepoImpl @Inject constructor(private val firebaseOps: FirebaseOps): To
                     .addOnCompleteListener { state.resume(it.isSuccessful) }
             }
             if(status) emit(ToDoState.Success) else emit(ToDoState.Failed)
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override fun removeToDo(id: String): Flow<ToDoState> = flow {
+        if(userInfo != null){
+            try {
+                firebaseDatabase.document(userInfo.uid)
+                    .collection(TODO_SUB_PATH).document(id).delete().await()
+                emit(ToDoState.Deleted)
+            }catch (e: Exception){
+                emit(ToDoState.Failed)
+            }
         }
     }.flowOn(Dispatchers.IO)
 }
