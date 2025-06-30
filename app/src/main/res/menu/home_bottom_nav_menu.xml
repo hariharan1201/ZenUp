@@ -8,6 +8,7 @@
         android:title="@string/todo" />
     <item
         android:id="@+id/reminder_page"
+        android:visible="false"
         android:icon="@drawable/round_today_24"
         android:title="@string/reminder" />
     <item

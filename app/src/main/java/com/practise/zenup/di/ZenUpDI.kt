@@ -6,6 +6,8 @@ import com.practise.zenup.frags.profile.repo.ProfileRepo
 import com.practise.zenup.frags.profile.repo.ProfileRepoImpl
 import com.practise.zenup.frags.splash.repo.SplashRepo
 import com.practise.zenup.frags.splash.repo.SplashRepoImpl
+import com.practise.zenup.frags.todo.repo.ToDoRepo
+import com.practise.zenup.frags.todo.repo.ToDoRepoImpl
 import com.practise.zenup.model.FirebaseOps
 import dagger.Module
 import dagger.Provides
@@ -29,5 +31,8 @@ object ZenUpDI {
 
     @Singleton @Provides
     fun provideProfileRepo() : ProfileRepo = ProfileRepoImpl(provideFireBaseOps())
+
+    @Singleton @Provides
+    fun provideToDoRepo() : ToDoRepo = ToDoRepoImpl(provideFireBaseOps())
 
 }

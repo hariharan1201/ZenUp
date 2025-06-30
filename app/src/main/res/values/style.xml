@@ -22,4 +22,10 @@
         <item name="android:textColorHint">@color/zen_fontColor</item>
         <item name="android:layout_marginHorizontal" tools:targetApi="o">15dp</item>
     </style>
+
+    <style name="screen_title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -10,4 +10,14 @@
         android:layout_height="match_parent"
         android:text="@string/reminder" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_todo_btn"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:src="@drawable/outline_add_24"
+        android:backgroundTint="@color/zen_primary"
+        android:contentDescription="@string/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </FrameLayout>
