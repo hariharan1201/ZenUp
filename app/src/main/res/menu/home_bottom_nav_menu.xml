@@ -4,12 +4,15 @@
 
     <item
         android:id="@+id/todo_page"
+        android:icon="@drawable/round_checklist_24"
         android:title="@string/todo" />
     <item
         android:id="@+id/reminder_page"
+        android:icon="@drawable/round_today_24"
         android:title="@string/reminder" />
-
     <item
         android:id="@+id/profile_page"
+        android:icon="@drawable/outline_person_24"
         android:title="@string/profile" />
+
 </menu>
