@@ -2,6 +2,8 @@ package com.practise.zenup.di
 
 import com.practise.zenup.frags.auth.repo.AuthRepo
 import com.practise.zenup.frags.auth.repo.AuthRepoImpl
+import com.practise.zenup.frags.profile.repo.ProfileRepo
+import com.practise.zenup.frags.profile.repo.ProfileRepoImpl
 import com.practise.zenup.frags.splash.repo.SplashRepo
 import com.practise.zenup.frags.splash.repo.SplashRepoImpl
 import com.practise.zenup.model.FirebaseOps
@@ -24,5 +26,8 @@ object ZenUpDI {
 
     @Singleton @Provides
     fun provideSplashRepo() : SplashRepo = SplashRepoImpl(provideFireBaseOps())
+
+    @Singleton @Provides
+    fun provideProfileRepo() : ProfileRepo = ProfileRepoImpl(provideFireBaseOps())
 
 }
