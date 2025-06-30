@@ -1,6 +1,7 @@
 package com.practise.zenup.frags.todo.repo
 
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.Query
 import com.practise.zenup.model.FirebaseOps
 import com.practise.zenup.utils.TODO_FB_PATH
@@ -17,6 +18,11 @@ import kotlin.coroutines.suspendCoroutine
 class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
     private val firebaseDatabase = firebaseOps.getFirebaseFireStore().collection(TODO_FB_PATH)
     private val userInfo = firebaseOps.getFirebaseAuth().currentUser
+
+    init {
+        firebaseOps.getFirebaseFireStore().firestoreSettings = FirebaseFirestoreSettings
+            .Builder().setPersistenceEnabled(true).build()
+    }
 
     override fun getToDo(): Flow<ToDoState> = flow {
         emit(ToDoState.Loading)
