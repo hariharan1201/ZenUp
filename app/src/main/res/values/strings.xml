@@ -19,4 +19,9 @@
     <string name="profile">Profile</string>
     <string name="reminder">Reminder</string>
     <string name="logout">Logout</string>
+    <string name="add">Add</string>
+    <string name="add_todo">Add ToDo</string>
+    <string name="add_your_todo">Add your ToDo</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="no_todo_found">Zero TODOs. Launch a new one?</string>
 </resources>
