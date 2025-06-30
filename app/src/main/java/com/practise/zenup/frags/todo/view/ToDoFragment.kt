@@ -2,14 +2,15 @@ package com.practise.zenup.frags.todo.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.firestore.DocumentSnapshot
 import com.practise.zenup.R
 import com.practise.zenup.base.AppBaseFragment
 import com.practise.zenup.databinding.FragmentToDoBinding
@@ -23,7 +24,6 @@ class ToDoFragment : AppBaseFragment() {
 
     private val viewModel: ToDoViewModel by viewModels()
     private lateinit var binding: FragmentToDoBinding
-    private val dummyData = listOf("Hello","its","me")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +50,9 @@ class ToDoFragment : AppBaseFragment() {
             viewModel.todoState.observe(viewLifecycleOwner){ state->
                 showProgressBar(state == ToDoState.Loading)
                 when(state){
-                    is ToDoState.GetToDo -> todoListView.adapter = ToDoAdopter(state.todo)
+                    is ToDoState.GetToDo -> onGetData(state.todo)
                     ToDoState.Success -> viewModel.getToDos()
+                    ToDoState.Deleted -> viewModel.getToDos()
                     else ->{}
                 }
             }
@@ -70,19 +71,24 @@ class ToDoFragment : AppBaseFragment() {
 
         val dialog  = AlertDialog.Builder(requireContext()).setView(dialogView).create()
 
-        dialog.setOnShowListener {
-            dialog.window?.setLayout(
-                (resources.displayMetrics.widthPixels * 0.9).toInt(), // 90% of screen width
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
-
         doneBtn.setOnClickListener {
             viewModel.setToDo(todoField.text.toString())
             dialog.dismiss()
         }
 
         dialog.show()
+    }
+
+    private fun onCheck(data : DocumentSnapshot) { viewModel.removeToDo(data.id) }
+
+    private fun onGetData(data: MutableList<DocumentSnapshot>) {
+        binding.apply {
+            if(data.size > 0){
+                todoListView.adapter = ToDoAdopter(data){ datum -> onCheck(datum) }
+            }
+            noTodoInfo.isVisible = data.size == 0
+            todoListView.isVisible = data.size > 0
+        }
     }
 
 }
