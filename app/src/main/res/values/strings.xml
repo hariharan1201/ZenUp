@@ -2,4 +2,21 @@
     <string name="app_name">ZenUp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_moto">Level up your day, the Zen way.</string>
+    <string name="login">Login</string>
+    <string name="or">or</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_you_have_an_account">Don\'t you have an account ?</string>
+    <string name="account_exits">Already have an account ?</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="password_does_not_match">Password does not match</string>
+    <string name="todo">ToDo</string>
+    <string name="profile">Profile</string>
+    <string name="reminder">Reminder</string>
+    <string name="logout">Logout</string>
 </resources>

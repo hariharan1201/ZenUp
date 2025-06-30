@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/toDoFragment">
+
+    <fragment
+        android:id="@+id/toDoFragment"
+        android:name="com.practise.zenup.frags.todo.view.ToDoFragment"
+        android:label="fragment_to_do"
+        tools:layout="@layout/fragment_to_do" >
+        <action
+            android:id="@+id/action_toDoFragment_to_reminderFragment"
+            app:destination="@id/reminderFragment" />
+        <action
+            android:id="@+id/action_toDoFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reminderFragment"
+        android:name="com.practise.zenup.frags.remainder.view.ReminderFragment"
+        android:label="fragment_remainder"
+        tools:layout="@layout/fragment_remainder" >
+        <action
+            android:id="@+id/action_reminderFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.practise.zenup.frags.profile.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_reminderFragment"
+            app:destination="@id/reminderFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_toDoFragment"
+            app:destination="@id/toDoFragment" />
+    </fragment>
+</navigation>
