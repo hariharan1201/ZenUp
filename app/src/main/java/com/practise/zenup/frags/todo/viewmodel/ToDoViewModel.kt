@@ -28,9 +28,15 @@ class ToDoViewModel @Inject constructor(private val toDoRepo: ToDoRepo): ViewMod
         }
     }
 
-    fun removeToDo(id : String){
+    fun removeToDo(id : String, status : Boolean){
         viewModelScope.launch {
-            toDoRepo.removeToDo(id).collectLatest { _todoState.value = it }
+            toDoRepo.removeToDo(id, status).collectLatest { _todoState.value = it }
+        }
+    }
+
+    fun observeToDo() {
+        viewModelScope.launch {
+            toDoRepo.observeToDo().collectLatest { _todoState.value = it }
         }
     }
 

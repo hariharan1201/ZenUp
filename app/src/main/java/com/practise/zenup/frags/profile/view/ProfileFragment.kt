@@ -58,8 +58,8 @@ class ProfileFragment : AppBaseFragment() {
 
     private fun bindUserData(data : FirebaseUser) {
         binding.apply {
-            username.text = data.uid
-            email.text = data.email
+            username.text = "UID: ${data.uid}"
+            email.text = "Email: ${data.email}"
             showProgressBar(false)
         }
     }

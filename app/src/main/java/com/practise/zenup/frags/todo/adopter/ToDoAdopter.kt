@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.practise.zenup.R
 
-class ToDoAdopter(private val list: MutableList<DocumentSnapshot>, private val onItemCheck : (DocumentSnapshot) -> Unit)
+class ToDoAdopter(private val list: MutableList<DocumentSnapshot>, private val onItemCheck : (DocumentSnapshot,Boolean) -> Unit)
     : RecyclerView.Adapter<ToDoAdopter.ToDoViewHolder>(){
 
     inner class ToDoViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
@@ -25,7 +25,10 @@ class ToDoAdopter(private val list: MutableList<DocumentSnapshot>, private val o
     override fun onBindViewHolder(holder: ToDoAdopter.ToDoViewHolder, position: Int) {
         holder.username.text = list[position].get("ToDo").toString()
         holder.statusBox.isChecked = list[position].get("Status") as Boolean
-        holder.statusBox.setOnClickListener { onItemCheck(list[position]) }
+        holder.statusBox.isEnabled = !(list[position].get("Status") as Boolean)
+        holder.statusBox.setOnCheckedChangeListener { _, b ->
+            onItemCheck(list[position], b)
+        }
     }
 
     override fun getItemCount(): Int = list.size

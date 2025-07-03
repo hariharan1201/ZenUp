@@ -24,4 +24,6 @@
     <string name="add_your_todo">Add your ToDo</string>
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="no_todo_found">Zero TODOs. Launch a new one?</string>
+    <string name="todo_should_not_be_empty">ToDo should not be empty</string>
+    <string name="completed">Completed</string>
 </resources>

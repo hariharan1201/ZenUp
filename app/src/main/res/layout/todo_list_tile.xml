@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingVertical="15dp"
+    android:paddingVertical="8dp"
     android:background="@drawable/todo_list_tile_bg"
     android:layout_height="wrap_content">
 
@@ -17,7 +17,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name"
-        style="@style/subtitle"
+        style="@style/todo_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add"

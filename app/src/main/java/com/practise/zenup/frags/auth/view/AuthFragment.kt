@@ -2,9 +2,12 @@ package com.practise.zenup.frags.auth.view
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.practise.zenup.R
@@ -51,14 +54,48 @@ class AuthFragment : AppBaseFragment() {
 
             signUp.setOnClickListener { handleSignUp() }
 
+            emailFld.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { /*null*/ }
+                override fun onTextChanged(email: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if(emailFldLayout.error != null){
+                        email?.toString()?.let { validateEmail(it) }
+                    }
+                }
+                override fun afterTextChanged(p0: Editable?) {/*null*/}
+            })
+
+            passwordFld.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {/*null*/}
+                override fun onTextChanged(password: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if(passwordFldLayout.error != null) {
+                        password?.toString()?.let { validatePassword(it) }
+                    }
+                }
+                override fun afterTextChanged(p0: Editable?) {/*null*/}
+            })
+
+            confirmPasswordFld.addTextChangedListener(object  : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {/*null*/}
+                override fun onTextChanged(confirmPassword: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if(confirmPasswordFldLayout.error != null){
+                        confirmPassword?.toString()?.let { validatePassword(it) }
+                    }
+                }
+                override fun afterTextChanged(p0: Editable?) {/*null*/}
+            })
+
         }
 
     }
 
     private fun handleSignUp() {
+        hideKeyboard(requireView())
+        filedReset()
         signUpView = !signUpView
         binding.apply {
-            confirmPasswordFld.isVisible = signUpView
+            confirmPasswordFldLayout.isVisible = signUpView
+            passwordFld.imeOptions = if (signUpView) EditorInfo.IME_ACTION_NEXT else EditorInfo.IME_ACTION_DONE
+            confirmPasswordFld.imeOptions = EditorInfo.IME_ACTION_DONE
             if(signUpView){
                 signUpInfo.setText(R.string.account_exits)
                 signUp.setText(R.string.login)
@@ -71,19 +108,45 @@ class AuthFragment : AppBaseFragment() {
         }
     }
 
-    private fun validateSignIn(email: String, password: String) {
+    private fun filedReset() {
         binding.apply {
-            if(isValidEmail(email) && password.length >= 6){ viewModel.login(email, password) }
-            else if(!isValidEmail(email)){ emailFld.error = getString(R.string.invalid_email) }
-            else{ passwordFld.error = getString(R.string.invalid_password) }
+            emailFldLayout.error = null
+            passwordFldLayout.error = null
+            confirmPasswordFldLayout.error = null
+        }
+    }
+
+    private fun validateSignIn(email: String, password: String) {
+        validateEmail(email)
+        validatePassword(password)
+        binding.apply {
+            if(emailFldLayout.error == null && passwordFldLayout.error == null)
+                viewModel.login(email, password)
+        }
+    }
+
+    private fun validateEmail(email: String) {
+        binding.apply {
+            emailFldLayout.error = if(isValidEmail(email)) null else getString(R.string.invalid_email)
+        }
+    }
+
+    private fun validatePassword(password: String, confirmPassword: String = "", isConfirmPassword: Boolean = false) {
+        val size = password.length >= 6
+        binding.apply {
+            if(isConfirmPassword)
+                confirmPasswordFldLayout.error = if (password == confirmPassword) null else getString(R.string.password_does_not_match)
+            else
+                passwordFldLayout.error = if(size) null else getString(R.string.invalid_password)
         }
     }
 
     private fun validateSignUp(email : String, password : String, confirmPassword: String) {
+        validateEmail(email)
+        validatePassword(password, confirmPassword, isConfirmPassword = true)
         binding.apply {
             if(isValidEmail(email) && password == confirmPassword){ viewModel.signup(email, password) }
-            else if(!isValidEmail(email)){ emailFld.error = getString(R.string.invalid_email) }
-            else{ confirmPasswordFld.error = getString(R.string.password_does_not_match) }
+            else{ confirmPasswordFldLayout.error = getString(R.string.password_does_not_match) }
         }
     }
 

@@ -18,43 +18,62 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.525">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/email_fld"
-            style="@style/edit_fields"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_fld_layout"
+            style="@style/edit_fields_layout"
+            app:endIconMode="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.261" />
+            app:layout_constraintVertical_bias="0.261" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_fld"
+                style="@style/edit_fields"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/password_fld"
-            style="@style/edit_fields"
-            android:hint="@string/password"
-            android:inputType="textVisiblePassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_fld_layout"
+            style="@style/edit_fields_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.517"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_fld"
-            app:layout_constraintVertical_bias="0.094" />
+            app:layout_constraintTop_toBottomOf="@+id/email_fld_layout"
+            app:layout_constraintVertical_bias="0.094" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_fld"
+                style="@style/edit_fields"
+                android:hint="@string/password"
+                android:inputType="textVisiblePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/confirm_password_fld"
-            style="@style/edit_fields"
-            android:layout_marginTop="12dp"
-            android:hint="@string/confirm_password"
-            android:inputType="textVisiblePassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirm_password_fld_layout"
+            style="@style/edit_fields_layout"
             android:visibility="gone"
+            android:layout_marginTop="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_fld"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/password_fld_layout"
+            app:layout_constraintVertical_bias="0.0" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password_fld"
+                android:hint="@string/confirm_password"
+                style="@style/edit_fields"
+                android:inputType="textVisiblePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
         android:id="@+id/auth_Btn"
@@ -66,7 +85,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirm_password_fld"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_password_fld_layout"
             app:layout_constraintVertical_bias="0.94" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -76,7 +95,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textSize="26sp"
-            app:layout_constraintBottom_toTopOf="@+id/email_fld"
+            app:layout_constraintBottom_toTopOf="@+id/email_fld_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +118,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sign_up_info"
+            android:textColor="@color/zen_fontColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/don_t_you_have_an_account" />
