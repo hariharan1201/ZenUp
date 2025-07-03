@@ -1,5 +1,6 @@
 package com.practise.zenup.frags.todo.repo
 
+import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
@@ -17,11 +18,12 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
+class ToDoRepoImpl @Inject constructor(private val firebaseOps: FirebaseOps): ToDoRepo {
     private val firebaseDatabase = firebaseOps.getFirebaseFireStore().collection(TODO_FB_PATH)
-    private val userInfo = firebaseOps.getFirebaseAuth().currentUser
+    private var listenerRegistration: ListenerRegistration? = null
 
     override fun getToDo(): Flow<ToDoState> = flow {
+        val userInfo = firebaseOps.getFirebaseAuth().currentUser
         emit(ToDoState.Loading)
         if(userInfo != null) {
             val doc = firebaseDatabase
@@ -39,8 +41,10 @@ class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
     }.flowOn(Dispatchers.IO)
 
     override fun addToDo(todo : String): Flow<ToDoState> = flow {
+        val userInfo = firebaseOps.getFirebaseAuth().currentUser
         emit(ToDoState.Loading)
         if(userInfo != null){
+            Log.d("USER ID", "${userInfo.uid}")
             val status = suspendCoroutine { state->
                 firebaseDatabase.document(userInfo.uid)
                     .collection(TODO_SUB_PATH)
@@ -54,6 +58,7 @@ class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
     }.flowOn(Dispatchers.IO)
 
     override fun removeToDo(id: String, status: Boolean): Flow<ToDoState> = flow {
+        val userInfo = firebaseOps.getFirebaseAuth().currentUser
         val statusUpdate = mapOf("Status" to status)
         if(userInfo != null){
             try {
@@ -68,9 +73,7 @@ class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
 
     override fun observeToDo(): Flow<ToDoState> = callbackFlow {
         trySend(ToDoState.Loading)
-
-        var listenerRegistration: ListenerRegistration? = null
-
+        val userInfo = firebaseOps.getFirebaseAuth().currentUser
         if (userInfo != null) {
             listenerRegistration = firebaseDatabase
                 .document(userInfo.uid)
@@ -92,6 +95,11 @@ class ToDoRepoImpl @Inject constructor(firebaseOps: FirebaseOps): ToDoRepo {
         awaitClose {
             listenerRegistration?.remove()
         }
+    }.flowOn(Dispatchers.IO)
+
+    override fun closeObserver(): Flow<ToDoState> = flow<ToDoState> {
+        listenerRegistration?.remove()
+        emit(ToDoState.Success)
     }.flowOn(Dispatchers.IO)
 
 

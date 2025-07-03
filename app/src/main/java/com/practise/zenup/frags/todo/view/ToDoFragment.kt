@@ -43,6 +43,11 @@ class ToDoFragment : AppBaseFragment() {
         viewModel.observeToDo()
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.resetState()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

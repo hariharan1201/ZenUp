@@ -40,4 +40,10 @@ class ToDoViewModel @Inject constructor(private val toDoRepo: ToDoRepo): ViewMod
         }
     }
 
+    fun resetState() {
+        viewModelScope.launch {
+            toDoRepo.closeObserver().collectLatest { _todoState.value = it }
+        }
+    }
+
 }

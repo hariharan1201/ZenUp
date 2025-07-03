@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         val currentDestination = controller.currentDestination
         when(currentDestination?.id){
             R.id.homeFragment -> finish()
+            R.id.authFragment -> finish()
             else -> {super.onBackPressed()}
         }
     }

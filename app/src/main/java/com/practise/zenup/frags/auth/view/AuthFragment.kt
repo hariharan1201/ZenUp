@@ -113,6 +113,9 @@ class AuthFragment : AppBaseFragment() {
             emailFldLayout.error = null
             passwordFldLayout.error = null
             confirmPasswordFldLayout.error = null
+            emailFld.text?.clear()
+            passwordFld.text?.clear()
+            confirmPasswordFld.text?.clear()
         }
     }
 
